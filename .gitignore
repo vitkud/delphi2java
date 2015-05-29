@@ -1,0 +1,14 @@
+/.gradle
+/build
+
+/generated
+
+/bin
+/.settings
+/.classpath
+/.project
+
+/.idea
+*.iml
+
+*.tmp

@@ -1,0 +1,32 @@
+group 'ru.vitkud'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'antlr'
+
+sourceCompatibility = 1.7
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	antlr 'org.antlr:antlr4:4.5'
+	testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+	main.java.srcDir 'generated/main/java'
+	main.java.srcDirs -= file("$buildDir/generated-src/antlr/main")
+	test.java.srcDirs -= file("$buildDir/generated-src/antlr/test")
+}
+
+generateGrammarSource {
+//	outputDirectory = new File(sourceSets.main.java.srcDirs.first(), 'ru/vitkud/delphi/parser')
+	outputDirectory = file('generated/main/java/ru/vitkud/delphi/parser')
+	arguments += ['-package', 'ru.vitkud.delphi.parser']
+}
+
+clean {
+	delete "generated"
+}
