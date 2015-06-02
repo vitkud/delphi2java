@@ -1,8 +1,8 @@
 package ru.vitkud.delphi;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.ATNConfigSet;
+import org.antlr.v4.runtime.dfa.DFA;
 import ru.vitkud.delphi.parser.DelphiLexer;
 import ru.vitkud.delphi.parser.DelphiParser;
 
@@ -39,6 +39,15 @@ public class DelphiUnit {
 
 		// create a parser that feeds off the tokens buffer
 		DelphiParser parser = new DelphiParser(tokens);
+
+		// TODO handle errors and correct line and pos in line
+		//parser.removeErrorListeners();
+		//parser.addErrorListener(new BaseErrorListener() {
+		//	@Override
+		//	public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+		//		System.err.println("line " + line + ":" + charPositionInLine + " " + msg);
+		//	}
+		//});
 
 		// begin parsing
 		DelphiParser.FileContext file = parser.file();
