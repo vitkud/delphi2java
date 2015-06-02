@@ -15,7 +15,7 @@ public class DjUnit {
 
 	public void toJava(JavaProjectFileAppender projectAppender, String basePackage) {
 		this.projectAppender = projectAppender;
-		this.fullPackage =  basePackage + "." + delphiUnit.getName().toLowerCase();
+		this.fullPackage =  basePackage + (basePackage.isEmpty() ? "" : ".") + delphiUnit.getName().toLowerCase();
 
 		for (DelphiInterface delphiInterface : delphiUnit.getInterfaces()) {
 			DjInterface djInterface = new DjInterface(delphiInterface);

@@ -38,12 +38,12 @@ public class Delphi2Java {
 				@Override
 				public void appendMainJava(String fullPackage, String className, String content) {
 					System.out.println(fullPackage.replace('.', '/') + "/" + className + ".java");
+					System.out.println("----------------------------------------");
 					System.out.println(content);
 				}
 				@Override
 				public void appendTestJava(String fullPackage, String className, String content) {
-					System.out.println(fullPackage.replace('.', '/') + "/" + className + ".java");
-					System.out.println(content);
+					appendMainJava(fullPackage, className, content);
 				}
 			};
 			//outputPath = new File(System.getProperty("user.dir"), "java");

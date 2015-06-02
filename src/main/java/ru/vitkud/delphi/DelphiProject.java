@@ -7,6 +7,7 @@ public class DelphiProject {
 	// TODO: AST -> ASG
 
 	List<DelphiUnit> units;
+	private String[] definitions;
 
 	public void loadDelphiProject(File dprojFile) {
 		// from dprojFile:
@@ -20,5 +21,13 @@ public class DelphiProject {
 
 	public List<DelphiUnit> getUnits() {
 		return units;
+	}
+
+	public String[] getDefinitions() {
+		return definitions;
+	}
+
+	public void setDefinitions(String[] definitions) {
+		this.definitions = definitions;
 	}
 }

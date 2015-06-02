@@ -1,12 +1,20 @@
 package ru.vitkud.delphi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DelphiInterface {
-	private DelphiInterface[] parents;
+	private List<DelphiInterface> parents = new ArrayList<>();
 	private String name;
-	private DelphiFunction[] functions;
+	private List<DelphiFunction> functions = new ArrayList<>();
+	private String guid;
+
+	public DelphiInterface(String name) {
+		this.name = name;
+	}
 
 	public DelphiInterface[] getParents() {
-		return parents;
+		return parents.toArray(new DelphiInterface[parents.size()]);
 	}
 
 	public String getName() {
@@ -14,6 +22,18 @@ public class DelphiInterface {
 	}
 
 	public DelphiFunction[] getFunctions() {
-		return functions;
+		return functions.toArray(new DelphiFunction[functions.size()]);
+	}
+
+	public void setGuid(String guid) {
+		this.guid = guid;
+	}
+
+	public void addUnknownParent(String parentName) {
+		parents.add(new DelphiInterface(parentName));
+	}
+
+	public void addFunction(DelphiFunction delphiFunction) {
+		functions.add(delphiFunction);
 	}
 }

@@ -1,5 +1,8 @@
 package ru.vitkud.delphi;
 
+import ru.vitkud.delphi.java.DjUnit;
+import ru.vitkud.delphi.java.JavaProjectFileAppender;
+
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
@@ -21,6 +24,7 @@ public class Delphi2JavaGui extends JDialog {
 	private JButton buttonOK;
 	private JButton buttonCancel;
 	private JTextArea txaDelphi;
+	private JTextArea txaJava;
 
 	private static final String TEMP_SOURCE_DELPHI_FILE_PATH = "delphi_source.tmp";
 
@@ -111,8 +115,26 @@ public class Delphi2JavaGui extends JDialog {
 	private void onOK() {
 // add your code here
 		try {
-			Delphi2Java.convert(new ByteArrayInputStream(txaDelphi.getText().getBytes()),
-					new String[]{"VER220", "RELEASE"});
+			DelphiProject delphiProject = new DelphiProject();
+			delphiProject.setDefinitions(new String[]{"VER220", "RELEASE"});
+			DelphiUnit delphiUnit = new DelphiUnit(delphiProject, new ByteArrayInputStream(txaDelphi.getText().getBytes()));
+
+			JavaProjectFileAppender projectAppender = new JavaProjectFileAppender() {
+				@Override
+				public void appendMainJava(String fullPackage, String className, String content) {
+					txaJava.append(fullPackage.replace('.', '/') + "/" + className + ".java");
+					txaJava.append("\n----------------------------------------\n");
+					txaJava.append(content);
+					txaJava.append("\n");
+				}
+
+				@Override
+				public void appendTestJava(String fullPackage, String className, String content) {
+					appendMainJava(fullPackage, className, content);
+				}
+			};
+			DjUnit djUnit = new DjUnit(delphiUnit);
+			djUnit.toJava(projectAppender, "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -157,13 +179,22 @@ public class Delphi2JavaGui extends JDialog {
 		final JPanel panel1 = new JPanel();
 		panel1.setLayout(new BorderLayout(0, 0));
 		contentPane.add(panel1, BorderLayout.CENTER);
+		final JSplitPane splitPane1 = new JSplitPane();
+		panel1.add(splitPane1, BorderLayout.CENTER);
 		final JScrollPane scrollPane1 = new JScrollPane();
-		panel1.add(scrollPane1, BorderLayout.CENTER);
+		splitPane1.setLeftComponent(scrollPane1);
 		txaDelphi = new JTextArea();
 		txaDelphi.setColumns(40);
 		txaDelphi.setFont(new Font("Courier New", txaDelphi.getFont().getStyle(), txaDelphi.getFont().getSize()));
 		txaDelphi.setRows(10);
 		scrollPane1.setViewportView(txaDelphi);
+		final JScrollPane scrollPane2 = new JScrollPane();
+		splitPane1.setRightComponent(scrollPane2);
+		txaJava = new JTextArea();
+		txaJava.setColumns(40);
+		txaJava.setFont(new Font("Courier New", txaJava.getFont().getStyle(), txaJava.getFont().getSize()));
+		txaJava.setRows(10);
+		scrollPane2.setViewportView(txaJava);
 		final JPanel panel2 = new JPanel();
 		panel2.setLayout(new BorderLayout(0, 0));
 		contentPane.add(panel2, BorderLayout.SOUTH);

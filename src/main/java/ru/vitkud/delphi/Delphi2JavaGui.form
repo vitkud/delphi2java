@@ -12,21 +12,47 @@
         <properties/>
         <border type="none"/>
         <children>
-          <scrollpane id="81779">
+          <splitpane id="9b87e">
             <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="206cb" class="javax.swing.JTextArea" binding="txaDelphi">
-                <constraints/>
-                <properties>
-                  <columns value="40"/>
-                  <font name="Courier New"/>
-                  <rows value="10"/>
-                </properties>
-              </component>
+              <scrollpane id="81779">
+                <constraints>
+                  <splitpane position="left"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="206cb" class="javax.swing.JTextArea" binding="txaDelphi">
+                    <constraints/>
+                    <properties>
+                      <columns value="40"/>
+                      <font name="Courier New"/>
+                      <rows value="10"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+              <scrollpane id="8ffc9">
+                <constraints>
+                  <splitpane position="right"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="3e8aa" class="javax.swing.JTextArea" binding="txaJava">
+                    <constraints/>
+                    <properties>
+                      <columns value="40"/>
+                      <font name="Courier New"/>
+                      <rows value="10"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
-          </scrollpane>
+          </splitpane>
         </children>
       </grid>
       <grid id="94766" layout-manager="BorderLayout" hgap="0" vgap="0">

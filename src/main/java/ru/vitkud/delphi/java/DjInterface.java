@@ -16,7 +16,7 @@ public class DjInterface {
 
 	public void toJava(JavaProjectFileAppender projectAppender, String fullPackage) {
 		StringBuilder javaFileCont = new StringBuilder();
-		javaFileCont.append("package ").append(fullPackage).append(";\n");
+		javaFileCont.append("package ").append(fullPackage).append(";\n\n");
 		// TODO adjust imports
 
 		javaFileCont.append("public interface ").append(delphiInterface.getName());
@@ -31,7 +31,7 @@ public class DjInterface {
 			}
 		}
 
-		javaFileCont.append(" {");
+		javaFileCont.append(" {\n");
 
 		DelphiFunction[] delphiFunctions = delphiInterface.getFunctions();
 		for (DelphiFunction delphiFunction : delphiFunctions) {
@@ -43,16 +43,18 @@ public class DjInterface {
 			} else {
 				javaFileCont.append(new DjType(delphiFunction.getResultType()).toString()).append(" ");
 			}
-
-			javaFileCont.append("(");
+			javaFileCont.append(delphiFunction.getName()).append("(");
 			DelphiArgument[] arguments = delphiFunction.getArguments();
+			boolean first = true;
 			for (DelphiArgument argument : arguments) {
+				if (!first) javaFileCont.append(", ");
+				first = false;
 				javaFileCont.append(new DjType(argument.getType()).toString()).append(" ").append(argument.getName());
 			}
-
+			javaFileCont.append(")\n");
 		}
 
-		javaFileCont.append("}\n");
+		javaFileCont.append("}\n\n");
 		projectAppender.appendMainJava(fullPackage, delphiInterface.getName(), javaFileCont.toString());
 	}
 }
