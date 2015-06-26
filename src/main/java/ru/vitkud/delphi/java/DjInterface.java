@@ -43,15 +43,16 @@ public class DjInterface {
 			} else {
 				javaFileCont.append(new DjType(delphiFunction.getResultType()).toString()).append(" ");
 			}
-			javaFileCont.append(delphiFunction.getName()).append("(");
+			javaFileCont.append(DjHelper.delphiNameToJava(delphiFunction.getName())).append("(");
 			DelphiArgument[] arguments = delphiFunction.getArguments();
 			boolean first = true;
 			for (DelphiArgument argument : arguments) {
 				if (!first) javaFileCont.append(", ");
 				first = false;
-				javaFileCont.append(new DjType(argument.getType()).toString()).append(" ").append(argument.getName());
+				javaFileCont.append(new DjType(argument.getType()).toString()).append(" ")
+						.append(DjHelper.delphiNameToJava(argument.getName()));
 			}
-			javaFileCont.append(")\n");
+			javaFileCont.append(");\n");
 		}
 
 		javaFileCont.append("}\n\n");
